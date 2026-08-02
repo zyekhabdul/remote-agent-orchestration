@@ -1,18 +1,47 @@
 # 🤖 Remote Agent Orchestration Framework
 
-[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
-[![Node.js](https://img.shields.io/badge/Node.js-16.0%2B-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0%2B-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Express](https://img.shields.io/badge/Express-4.18%2B-000000?style=flat-square&logo=express)](https://expressjs.com/)
-[![WebSocket](https://img.shields.io/badge/WebSocket-Real%20Time%20Bidirectional-25C2DE?style=flat-square)](src/websocket/)
-[![Encryption](https://img.shields.io/badge/Encryption-AES%20256%20GCM-red?style=flat-square)](src/)
-[![Redis](https://img.shields.io/badge/Redis-Optional%20Cache-DC382D?style=flat-square&logo=redis&logoColor=white)](src/)
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker&logoColor=white)](Dockerfile)
-[![Testing](https://img.shields.io/badge/Testing-Jest%20%2B%20Coverage-C21325?style=flat-square&logo=jest)](jest.config.js)
-[![Rate Limiting](https://img.shields.io/badge/DDoS%20Protection-Rate%20Limiting-orange?style=flat-square)](src/)
-[![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen?style=flat-square)]()
+<p align="center">
+  <a href="https://github.com/zyekhabdul/remote-agent-orchestration/actions/workflows/ci.yml">
+    <img src="https://github.com/zyekhabdul/remote-agent-orchestration/actions/workflows/ci.yml/badge.svg" alt="CI Build Status">
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="License: MIT">
+  </a>
+  <a href="https://nodejs.org/">
+    <img src="https://img.shields.io/badge/Node.js-18.0%2B-339933?style=flat-square&logo=node.js&logoColor=white" alt="Node.js 18+">
+  </a>
+  <a href="https://www.typescriptlang.org/">
+    <img src="https://img.shields.io/badge/TypeScript-5.0%2B-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript 5.0+">
+  </a>
+  <a href="Dockerfile">
+    <img src="https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker Ready">
+  </a>
+</p>
 
 A production-ready, distributed agent management system with secure command routing, real-time communication, and comprehensive monitoring.
+
+---
+
+## 🏗️ Architecture & Command Routing Flow
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Client as Orchestration Client / User
+    participant Server as Agent Orchestrator Server
+    participant Router as Command Router Engine
+    actor Agent as Remote AI / Execution Agent
+
+    Agent->>Server: WebSocket Connect & Authentication (JWT + HMAC)
+    Server-->>Agent: Connection Ack & Heartbeat Interval
+    Client->>Server: POST /api/v1/commands (Command Payload)
+    Server->>Router: Select Target Agent (Round-Robin / Least-Loaded)
+    Router->>Agent: Encrypted Command (AES-256-GCM) via WebSocket
+    Agent->>Agent: Execute Task (Shell / Module)
+    Agent-->>Server: Encrypted Result & Telemetry
+    Server-->>Client: Stream Response / Status Complete
+```
+
 
 ## 🚀 Features
 
